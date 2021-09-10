@@ -1,0 +1,14 @@
+[thor@ansible-controller db]$ ansible-galaxy install kodekloud1.mysql
+- downloading role 'mysql', owned by kodekloud1
+- downloading role from https://github.com/kodekloudhub/mysql/archive/master.tar.gz
+- extracting kodekloud1.mysql to /home/thor/.ansible/roles/kodekloud1.mysql
+- kodekloud1.mysql (master) was installed successfully
+
+[thor@ansible-controller web]$ ansible-galaxy install geerlingguy.nginx -p roles
+- downloading role 'nginx', owned by geerlingguy
+- downloading role from https://github.com/geerlingguy/ansible-role-nginx/archive/3.1.0.tar.gz
+- extracting geerlingguy.nginx to /home/thor/playbooks/web/roles/geerlingguy.nginx
+- geerlingguy.nginx (3.1.0) was installed successfully
+
+[thor@ansible-controller roles]$ ansible-galaxy init ansible-role-firewalld          
+- ansible-role-firewalld was created successfully
