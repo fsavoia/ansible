@@ -1,0 +1,6 @@
+# Inventory File
+[web_servers]
+lamp-web ansible_host=172.20.1.100 httpd_port=80 repository=https://github.com/kodekloudhub/learning-app-ecommerce.git ansible_user=john ansible_ssh_private_key_file=/home/thor/.ssh/john
+
+[db_servers]
+lamp-db ansible_host=172.20.1.101 ansible_user=maria mysqlservice=mysqld mysql_port=3306 dbname=ecomdb dbuser=ecomuser dbpassword=ecompassword ansible_ssh_private_key_file=/home/thor/.ssh/maria

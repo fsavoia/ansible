@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Copy Apache welcome file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+
+    - name: Reload Apache after previous step
+      service:
+        name: httpd
+        state: reloaded

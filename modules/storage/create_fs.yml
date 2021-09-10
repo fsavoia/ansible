@@ -1,0 +1,7 @@
+---
+- hosts: node00
+  tasks:
+    - name: creating new fs
+      filesystem:
+        fstype: ext4
+        dev: /dev/vg_sql/lv_data

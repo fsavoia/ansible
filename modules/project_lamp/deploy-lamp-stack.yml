@@ -1,0 +1,122 @@
+- name: Deploy lamp stack application
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install common dependencies
+      yum:
+        name:
+          - libselinux-python
+          - libsemanage-python
+          - firewalld
+        state: present
+
+- hosts: db_servers
+  name: Configuring MariaDB pre-requisites
+  become: yes
+
+  tasks:
+    - name: Installing MariaDB required packages
+      yum:
+        name:
+          - mariadb-server
+          - MySQL-python
+        state: present
+
+    - name: Copying MySQL configuration file
+      copy:
+        src: files/my.cnf
+        dest: /etc/my.cnf
+    
+    - name: Starting and enabling required services
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - mariadb
+        - firewalld
+
+    - name: Configuring firewall on MariaDB server
+      firewalld:
+        state: enabled
+        zone: public
+        permanent: yes
+        immediate: yes
+        port: 3306/tcp
+
+- hosts: db_servers
+  name: Configuring MariaDB database
+  become: yes
+
+  tasks:
+    - name: Creating application database
+      mysql_db:
+        name: '{{ dbname }}'
+        state: present
+    
+    - name: Creating application database user
+      mysql_user:
+        name: '{{ dbuser }}'
+        password: '{{ dbpassword }}'
+        state: present
+        priv: '*.*:ALL'
+        host: '172.20.1.100'
+    
+    - name: Copying db-load-script.sql file
+      copy:
+        src: files/db-load-script.sql
+        dest: /tmp/db-load-script.sql
+
+    - name: Loading inventory data
+      shell: mysql -f < /tmp/db-load-script.sql
+
+- hosts: web_servers
+  name: Configuring Web Server Pre-requisites
+  become: yes
+  tasks:
+
+    - name: Installing Apache required packages
+      yum:
+        name:
+          - httpd
+          - php
+          - php-mysql
+          - git
+        state: present
+
+    - name: Starting and enabling firewalld services
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+    - name: Configuring firewall on Web server
+      firewalld:
+        state: enabled
+        zone: public
+        permanent: yes
+        immediate: yes
+        port: '{{ httpd_port }}/tcp'
+
+    - name: Changing default page on Apache
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: "DirectoryIndex index.html"
+        replace: "DirectoryIndex index.php"
+
+    - name: Starting and enabling Apache services
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+    
+    - name: Cloning source code repository
+      git:
+        repo: '{{ repository }}'
+        dest: /var/www/html
+        force: yes
+    
+    - name: Copying custom index.php to righ location
+      copy:
+        src: files/index.php
+        dest: /var/www/html/index.php

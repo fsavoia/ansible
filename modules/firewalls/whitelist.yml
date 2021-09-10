@@ -1,0 +1,13 @@
+---
+- name: whitelist port 80
+  hosts: web1
+
+  tasks:
+  - name: whitelist web2 address on web1 server
+    firewalld:
+      source: 172.20.1.101
+      state: enabled
+      zone: internal
+      permanent: yes
+      immediate: yes
+      

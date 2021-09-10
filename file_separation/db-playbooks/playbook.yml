@@ -1,0 +1,5 @@
+- name: Print NTP server data
+  hosts: all
+  gather_facts: no
+  tasks:
+    - debug: var=ntp_server

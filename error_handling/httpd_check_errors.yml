@@ -1,0 +1,24 @@
+---
+- name: Install httpd
+  hosts: web1
+  gather_facts: no
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+
+    - name: Check httpd error logs
+      command: cat /var/log/httpd/error_log
+      register: results
+      failed_when: "'Error' in results.stdout"
+
+    - name: start service
+      service:
+        name: httpd
+        state: started
+
+    - name: Create a file
+      file:
+        path: /tmp/file
+        state: touch

@@ -1,0 +1,15 @@
+---
+- hosts: web1
+  name: Apache Configuration
+
+  tasks:
+    - name: Changing default port on Apache
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: "Listen 80"
+        replace: "Listen 8080"
+
+    - name: Restart Apache service
+      service:
+        name: httpd
+        state: restarted

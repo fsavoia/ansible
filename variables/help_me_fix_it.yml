@@ -1,0 +1,11 @@
+---
+- name: help me fix it playbook
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: alternative way to gather facts about remote host
+      setup: filter='ansible_dist*' 
+      register: facts
+    # - debug: var=facts
+
+    - shell: echo "{{ facts }}" > /tmp/output.txt

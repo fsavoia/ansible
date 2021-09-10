@@ -1,0 +1,12 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: stat module help to find the file info
+      stat:
+        path: /var/run
+      register: your_variable
+    # - debug: var=your_variable.stat
+
+    - name: Create /tmp/by_ansible file
+      shell: echo "{{ your_variable.stat }}" > /tmp/by_ansible

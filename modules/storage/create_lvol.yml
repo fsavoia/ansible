@@ -1,0 +1,8 @@
+---
+- hosts: node00
+  tasks:
+    - name: creating a new lvm
+      lvol:
+        vg: vg_sql
+        lv: lv_data
+        size: 500m

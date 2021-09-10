@@ -1,0 +1,35 @@
+---
+- hosts: web2
+  tasks:
+    - name: Install Apache/Firewall service
+      yum:
+        name: httpd, firewalld
+        state: present
+    
+    - name: Start and Enable Apache/Firewall service
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - httpd
+        - firewalld
+
+    - name: Change Apache port
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: "Listen 80"
+        replace: "Listen 8082"
+
+    - name: Restart Apache service
+      service:
+        name: httpd
+        state: restarted
+    
+    - name: Configure 8082/port on firewall
+      firewalld:
+        state: enabled
+        zone: public
+        permanent: yes
+        immediate: yes
+        port: 8082/tcp

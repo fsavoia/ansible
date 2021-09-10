@@ -1,0 +1,7 @@
+---
+- hosts: node00
+  tasks:
+    - name: creating new VG
+      lvg:
+        vg: vg_sql
+        pvs: /dev/vdb1

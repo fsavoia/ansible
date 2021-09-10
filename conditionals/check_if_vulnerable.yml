@@ -1,0 +1,16 @@
+---
+- hosts: web2
+  gather_facts: yes
+  vars:
+    remote_dest: /usr/local/bin/report_status.sh
+  tasks:
+     - shell: "{{ remote_dest }}"
+       register: file_status
+    
+     #- debug: var=file_status.stdout
+     - yum: name=bash state=latest
+       when: file_status.stdout == "vulnerable" and ansible_distribution == "CentOS"
+
+     - apt: name=bash state=latest
+       when: file_status.stdout == "vulnerable" and ansible_distribution == "Ubuntu"
+         

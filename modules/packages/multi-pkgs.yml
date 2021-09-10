@@ -1,0 +1,15 @@
+---
+- name: Install some packages
+  hosts: web1
+  
+  tasks: 
+  - name: Install sudo package
+    yum:
+      name: sudo
+      state: present
+
+  - name: Install vsftpd v2.2.2 package
+    yum:
+      name: vsftpd-2.2.2
+      state: present
+      allow_downgrade: yes

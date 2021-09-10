@@ -1,0 +1,11 @@
+---
+- hosts: web1
+  tasks:
+    - name: allow ansible controller to conect on port 443/tcp on web1
+      firewalld:
+        source: 172.20.1.2
+        service: https
+        state: enabled
+        permanent: yes
+        immediate: yes
+        zone: internal

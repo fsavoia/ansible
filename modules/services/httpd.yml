@@ -1,0 +1,12 @@
+---
+- hosts: web1
+  tasks:
+    - name: Check httpd status
+      service:
+        name: httpd
+        state: started
+    
+    - name: Enable http service
+      service:
+        name: httpd
+        enabled: yes

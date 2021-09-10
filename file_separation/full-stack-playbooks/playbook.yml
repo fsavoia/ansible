@@ -1,0 +1,6 @@
+- name: Configure full stack server
+  hosts: f-server-1
+  gather_facts: no
+  tasks:
+    - include_tasks: tasks/install-db-server.yml
+    - include_tasks: tasks/install-web-server.yml

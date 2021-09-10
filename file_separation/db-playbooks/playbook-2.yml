@@ -1,0 +1,9 @@
+- name: Print DB server data
+  hosts: all
+  gather_facts: no
+  include_vars: ../general/common/db/db.yml
+
+  tasks:
+    - include_vars: ../general/common/db/db.yml
+    - debug:
+        var: db_version

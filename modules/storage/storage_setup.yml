@@ -1,0 +1,22 @@
+---
+- hosts: node00
+  name: creating new filesystem on node00
+
+  tasks:
+    - name: creating new lv on node00
+      lvol:
+        vg: vg_sql
+        lv: mssql_db
+        size: 1g
+    
+    - name: creating new fs on node00
+      filesystem:
+        fstype: ext4
+        dev: /dev/vg_sql/mssql_db
+    
+    - name: creating new mount point on node00
+      mount:
+        path: /mnt/mssql
+        src: /dev/vg_sql/mssql_db
+        fstype: ext4
+        state: mounted

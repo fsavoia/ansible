@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - name: Create /tmp/variable.txt with dns_server from node01 content
+      shell: echo "{{ hostvars['node01.host'].dns_server }}" > /tmp/variable.txt
