@@ -1,0 +1,28 @@
+[thor@ansible-controller playbooks]$ ansible-playbook -i dynamic_custom.py ping.yml 
+
+PLAY [run a simple ping in a dynamic inventory] *************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************
+ok: [172.20.1.102]
+ok: [172.20.1.103]
+ok: [172.20.1.101]
+
+TASK [ping] *************************************************************************************************************************
+ok: [172.20.1.101]
+ok: [172.20.1.102]
+ok: [172.20.1.103]
+
+PLAY RECAP **************************************************************************************************************************
+172.20.1.101               : ok=2    changed=0    unreachable=0    failed=0   
+172.20.1.102               : ok=2    changed=0    unreachable=0    failed=0   
+172.20.1.103               : ok=2    changed=0    unreachable=0    failed=0 
+
+------------------------------------------------------------------------------------------------------------
+
+[thor@ansible-controller playbooks]$ ansible-inventory  -i ec2.py --host 172.20.1.109 
+{
+    "ansible_ssh_pass": "Passw0rd", 
+    "ansible_ssh_user": "root", 
+    "ec2_region": "ca-central-1", 
+    "ec2_state": "Running"
+}

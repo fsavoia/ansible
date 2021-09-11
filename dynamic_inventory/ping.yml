@@ -1,0 +1,5 @@
+---
+- name: run a simple ping in a dynamic inventory
+  hosts: all
+  tasks:
+    - ping:
