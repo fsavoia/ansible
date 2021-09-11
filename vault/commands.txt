@@ -1,0 +1,32 @@
+ansible-vault create file
+
+ansible-vault rekey file
+
+----------------------------------------------------------------------------------
+
+[thor@ansible-controller playbooks]$ ansible-vault decrypt --vault-password-file=vault_pass.txt decrypt_me.yml 
+Decryption successful
+
+----------------------------------------------------------------------------------
+Use copy module to copy the file.
+
+Edit /etc/ansible/ansible.cfg file to update vault_password_file parameter.
+
+----------------------------------------------------------------------------------
+
+[thor@ansible-controller playbooks]$ ansible-playbook -i inventory --vault-password-file=vault_pass.txt  
+copy_secrets.yml 
+
+PLAY [all] **************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************
+ok: [web1]
+ok: [web2]
+
+TASK [copy a secret file to remote hosts] *******************************************************************************************
+changed: [web1]
+changed: [web2]
+
+PLAY RECAP **************************************************************************************************************************
+web1                       : ok=2    changed=1    unreachable=0    failed=0   
+web2                       : ok=2    changed=1    unreachable=0    failed=0 
