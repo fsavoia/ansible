@@ -12,3 +12,80 @@
 
 [thor@ansible-controller roles]$ ansible-galaxy init ansible-role-firewalld          
 - ansible-role-firewalld was created successfully
+
+[thor@ansible-controller lamp-stack-playbooks]$ ansible-playbook -i inventory deploy-lamp-stack.yml 
+
+PLAY [Deploy lamp stack application] ********************************************************************************************
+
+TASK [Gathering Facts] **********************************************************************************************************
+ok: [lampweb]
+ok: [lamp-db]
+
+TASK [common : Install common dependencies] *************************************************************************************
+changed: [lamp-db]
+changed: [lampweb]
+
+PLAY [Deploy lamp stack application] ********************************************************************************************
+
+TASK [Gathering Facts] **********************************************************************************************************
+ok: [lamp-db]
+
+TASK [mysql : Install MariaDB package] ******************************************************************************************
+changed: [lamp-db]
+
+TASK [mysql : Create Mysql configuration file] **********************************************************************************
+changed: [lamp-db]
+
+TASK [mysql : Start MariaDB Service] ********************************************************************************************
+changed: [lamp-db]
+
+TASK [mysql : Start firewalld] **************************************************************************************************
+changed: [lamp-db]
+
+TASK [mysql : insert firewalld rule] ********************************************************************************************
+changed: [lamp-db]
+
+TASK [mysql : Create Application Database] **************************************************************************************
+changed: [lamp-db]
+
+TASK [mysql : Create Application DB User] ***************************************************************************************
+changed: [lamp-db]
+
+TASK [mysql : Move db-load-script to db host] ***********************************************************************************
+changed: [lamp-db]
+
+TASK [mysql : Load Inventory Data] **********************************************************************************************
+changed: [lamp-db]
+
+PLAY [Deploy lamp stack application] ********************************************************************************************
+
+TASK [Gathering Facts] **********************************************************************************************************
+ok: [lampweb]
+
+TASK [httpd-php : Install httpd and php] ****************************************************************************************
+changed: [lampweb]
+
+TASK [httpd-php : Install web role specific dependencies] ***********************************************************************
+changed: [lampweb]
+
+TASK [httpd-php : Start firewalld] **********************************************************************************************
+changed: [lampweb]
+
+TASK [httpd-php : insert firewalld rule for httpd] ******************************************************************************
+changed: [lampweb]
+
+TASK [httpd-php : Set index.php as the default page] ****************************************************************************
+changed: [lampweb]
+
+TASK [httpd-php : http service state] *******************************************************************************************
+changed: [lampweb]
+
+TASK [httpd-php : Copy the code from repository] ********************************************************************************
+changed: [lampweb]
+
+TASK [httpd-php : Creates the index.php file] ***********************************************************************************
+changed: [lampweb]
+
+PLAY RECAP **********************************************************************************************************************
+lamp-db                    : ok=12   changed=10   unreachable=0    failed=0   
+lampweb                    : ok=11   changed=9    unreachable=0    failed=0   
