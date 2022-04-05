@@ -35,6 +35,12 @@
     yum:
       name: docker
       state: latest
+
+  - name: add user ec2-user to docker group
+    command: usermod -aG docker ec2-user
+  
+  - name: add user ssm-user to docker group
+    command: usermod -aG docker ssm-user
       
   - name: Starting and enabling required services
     service:
