@@ -30,8 +30,17 @@
   - name: daemon-reload to pick up config changes
     ansible.builtin.systemd:
       daemon_reload: yes
-
-  - name: Start jenkins
-    ansible.builtin.systemd:
-      name: jenkins
+    
+   - name: Install jenkins
+    yum:
+      name: docker
+      state: latest
+      
+   - name: Starting and enabling required services
+     service:
+      name: "{{ item }}"
       state: started
+      enabled: yes
+     with_items:
+       - docker
+       - jenkins
