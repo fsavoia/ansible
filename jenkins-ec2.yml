@@ -31,16 +31,16 @@
     ansible.builtin.systemd:
       daemon_reload: yes
     
-   - name: Install jenkins
+  - name: Install jenkins
     yum:
       name: docker
       state: latest
       
-   - name: Starting and enabling required services
-     service:
+  - name: Starting and enabling required services
+    service:
       name: "{{ item }}"
       state: started
       enabled: yes
-     with_items:
+    with_items:
        - docker
        - jenkins
