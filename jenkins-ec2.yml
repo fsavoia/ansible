@@ -36,8 +36,8 @@
       name: docker
       state: latest
 
-  - name: add user ec2-user to docker group
-    command: usermod -aG docker ec2-user
+  - name: add user jenkins to docker group
+    command: usermod -aG docker jenkins
   
   - name: add user ssm-user to docker group
     command: usermod -aG docker ssm-user
