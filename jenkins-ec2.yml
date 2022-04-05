@@ -19,10 +19,10 @@
       name: '*'
       state: latest
 
-  - name: Install java
+  - name: Install Java
     shell: amazon-linux-extras install java-openjdk11 -y
 
-  - name: Install jenkins
+  - name: Install Jenkins
     yum:
       name: jenkins
       state: latest
@@ -31,7 +31,7 @@
     ansible.builtin.systemd:
       daemon_reload: yes
     
-  - name: Install jenkins
+  - name: Install Docker
     yum:
       name: docker
       state: latest
