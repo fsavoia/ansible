@@ -38,9 +38,6 @@
 
   - name: add user jenkins to docker group
     command: usermod -aG docker jenkins
-  
-  - name: add user ssm-user to docker group
-    command: usermod -aG docker ssm-user
       
   - name: Starting and enabling required services
     service:
